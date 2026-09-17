@@ -1,0 +1,25 @@
+.kategoriRad {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.kategoriNamn {
+    width: 100px;
+    flex-shrink: 0;
+    font-size: 1.1rem;
+}
+
+.barBakgrund {
+    flex-grow: 1;
+    height: 14px;
+    background: #bcbbbb;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.självaBaren {
+    height: 100%;
+    background:  rgb(101, 20, 144);
+    border-radius: 999px;
+}

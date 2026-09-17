@@ -1,25 +1,47 @@
 import { createContext, useEffect, useState } from "react";
 
-let BankAppContext= createContext(null)
+export const BankAppContext=createContext(null)
 export function BankAppProvider({children}){
     //skriv values här så som functioner, arrays, objecter och 
     //new Date().toJSON().splice(0,10)
-    let [inkomst,setInkomst]=useState(17231)
-    let [valuta,setValuta]=useState('SEK')
     let [rates,setRates]=useState({})
+    let kategorier=['boende', 'mat', 'transport', 'nöje','övrigt']
+    let [inkomst,setInkomst]=useState([
+        {
+            kategori:'lön',
+            belopp:34500,
+            date:'2026-05-25',
+            name:'Lön',
+            konto:'777102-8091'
+        },
+        {
+            kategori:'lön',
+            belopp:34000,
+            date:'2026-06-25',
+            name:'Lön',
+            konto:'777102-8091'
+        },
+        {
+            kategori:'lön',
+            belopp:33500,
+            date:'2026-07-25',
+            name:'Lön',
+            konto:'777102-8091'
+        },
+    ])
     useEffect(()=>{
         let getValutor=async()=>{
             try{
-                    let res=await fetch('https://api.frankfurter.app/latest?from=SEK')
-                    if (!res.ok) throw new Error(`HTTP error: ${res.status}`)
+                let res=await fetch('https://api.frankfurter.dev/v1/latest?from=SEK')
+                if (!res.ok) throw new Error(`HTTP error: ${res.status}`)
                     let data= await res.json()
-                    setRates(data.rates)
+                setRates(data.rates)
             }catch(err){
                 console.error(err)
             }
-    }
-    getValutor()
-},[])
+        }
+        getValutor()
+    },[])
     let konto= '777102-8091'
     let[utgifter,setUtgifter]=useState([
         {
@@ -79,8 +101,8 @@ export function BankAppProvider({children}){
             konto:'777102-8091'
         },
     ])
-    function betala(belopp, utgift){
-        setInkomst(prev=>prev-belopp)
+    let [valuta,setValuta]=useState('SEK')
+    function betala( utgift){
         setUtgifter(prev=>[...prev,utgift])
     }
     function lön(belopp){
@@ -91,16 +113,41 @@ export function BankAppProvider({children}){
     }
     function konvertera(SEK){
         if(valuta==='SEK'){
-            SEK
+            return SEK
         }
         let rate=rates[valuta]
         if(!rate){
-            SEK
+            return SEK
         }
         return SEK*rate
     }
+    let totalUtgifter=utgifter.reduce((total,utgift)=>utgift.belopp+total,0)
+    let totalUtgifterConvert= konvertera(totalUtgifter)
+    function gruppEfterKategori(utgifter){
+        let grupper={}
+        utgifter.forEach(utgift=>{
+            if(!grupper[utgift.kategori]){
+                grupper[utgift.kategori]=0
+            }
+            grupper[utgift.kategori]+=utgift.belopp
+        })
+        return grupper
+    }
+    let kategoriTotal= gruppEfterKategori(utgifter)
+    let sumUtgift=Object.values(kategoriTotal).reduce((sum,val)=>sum+val,0)
+    let kategoriProcent=Object.entries(kategoriTotal).map(([kategori, belopp])=>({
+        kategori,
+        belopp,
+        procent:(belopp/sumUtgift)*100
+    }))
+    let transaktioner=[
+        ...utgifter.map(u=>({...u,typ:'utgift'})),
+        ...inkomst.map(i=>({...i, typ:'inkomst'}))
+    ]
+    let totalInkomster=inkomst.reduce((sum,i)=>sum+i.belopp,0)
+    let totalSaldo=totalInkomster-totalUtgifter
     return(
-        <BankAppContext.Provider value={{inkomst,setInkomst,utgifter, setUtgifter, valuta, setValuta, konto, betala,lön,bytValuta, konvertera}}>
+        <BankAppContext.Provider value={{inkomst,setInkomst,utgifter, setUtgifter, valuta, setValuta, konto, betala,lön,bytValuta, konvertera, totalUtgifterConvert, kategorier, sumUtgift, kategoriProcent, transaktioner,totalSaldo, totalInkomster}}>
             {children}
         </BankAppContext.Provider>
     )

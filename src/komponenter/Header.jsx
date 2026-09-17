@@ -5,8 +5,6 @@ import Inkomst from './Inkomst'
 import BytValuta from './BytValuta'
 
 export default function Header({isHome}){
-
-    console.log(isHome);
     return(
         <nav>
             <img src={logo}></img>
