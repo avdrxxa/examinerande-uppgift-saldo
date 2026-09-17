@@ -10,16 +10,18 @@ export default function Homepage(){
     return(
         <>
             <Header isHome={true}/>
-            <h1>Good afternoon!</h1>
-            <Saldo/>
-            <div className="inkomst&utgifter">
-                <InkomsterDiv/>
-                <UtgifterDiv/>
-            </div>
-            <div className="kategori&trans">
-                <UtgifterPerKategori/>
-                <TransaktionerDiv/>
-            </div>
+            <main>
+                <h1>Good afternoon!</h1>
+                <Saldo/>
+                <div className="inkomstutgifter">
+                    <InkomsterDiv/>
+                    <UtgifterDiv/>
+                </div>
+                <div className="kategoritrans">
+                    <UtgifterPerKategori/>
+                    <TransaktionerDiv/>
+                </div>
+            </main>
         </>
     )
 }

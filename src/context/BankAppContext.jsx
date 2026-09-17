@@ -1,11 +1,23 @@
 import { createContext, useEffect, useState } from "react";
-
+import boendelogo from '../assets/boendelogo.svg'
+import matlogo from '../assets/matlogo.svg'
+import transportlogo from '../assets/transportlogo.svg'
+import lönlogo from '../assets/lönlogo.svg'
+import övrigtlogo from '../assets/övrigtlogo.svg'
+import nöjelogo from '../assets/nöjelogo.svg'
 export const BankAppContext=createContext(null)
 export function BankAppProvider({children}){
     //skriv values här så som functioner, arrays, objecter och 
     //new Date().toJSON().splice(0,10)
     let [rates,setRates]=useState({})
-    let kategorier=['boende', 'mat', 'transport', 'nöje','övrigt']
+    let kategoriLogos={
+        boende:boendelogo,
+        mat:matlogo,
+        transport:transportlogo,
+        nöje:nöjelogo,
+        övrigt:övrigtlogo,
+        lön:lönlogo
+    }
     let [inkomst,setInkomst]=useState([
         {
             kategori:'lön',
@@ -147,7 +159,7 @@ export function BankAppProvider({children}){
     let totalInkomster=inkomst.reduce((sum,i)=>sum+i.belopp,0)
     let totalSaldo=totalInkomster-totalUtgifter
     return(
-        <BankAppContext.Provider value={{inkomst,setInkomst,utgifter, setUtgifter, valuta, setValuta, konto, betala,lön,bytValuta, konvertera, totalUtgifterConvert, kategorier, sumUtgift, kategoriProcent, transaktioner,totalSaldo, totalInkomster}}>
+        <BankAppContext.Provider value={{inkomst,setInkomst,utgifter, setUtgifter, valuta, setValuta, konto, betala,lön,bytValuta, konvertera, totalUtgifterConvert, kategoriLogos, sumUtgift, kategoriProcent, transaktioner,totalSaldo, totalInkomster}}>
             {children}
         </BankAppContext.Provider>
     )

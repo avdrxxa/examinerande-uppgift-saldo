@@ -1,8 +1,8 @@
 export default function Inkomst(){
     return(
-        <>
-            <button className="inkomstBtn"></button>
+        <div>
+            <button className="inkomstBtn">💳</button>
             <p>Registrera inkomst</p>
-        </>
+        </div>
         )
 }

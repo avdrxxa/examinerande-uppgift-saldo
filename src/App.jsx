@@ -3,6 +3,7 @@ import {Routes, Route} from 'react-router-dom'
 import Transaktioner from './pages/Transaktioner'
 import Homepage from './pages/Homepage'
 import Utgifter from './pages/Utgifter'
+import Footer from './komponenter/Footer'
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <Route path='/transaktioner' element={<Transaktioner/>}/>
       <Route path='/utgifter' element={<Utgifter/>}/>
     </Routes>
+    <Footer/>
     </>
   )
 }
