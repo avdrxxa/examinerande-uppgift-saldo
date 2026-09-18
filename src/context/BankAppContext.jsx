@@ -118,7 +118,7 @@ export function BankAppProvider({children}){
         if(!rate){
             return SEK
         }
-        return SEK*rate
+        return Math.round(SEK*rate*100)/100
     }
     let totalUtgifter=utgifter.reduce((total,utgift)=>utgift.belopp+total,0)
     let totalUtgifterConvert= konvertera(totalUtgifter)
@@ -144,9 +144,11 @@ export function BankAppProvider({children}){
         ...inkomst.map(i=>({...i, typ:'inkomst'}))
     ]
     let totalInkomster=inkomst.reduce((sum,i)=>sum+i.belopp,0)
+    let totalInkomsterConvert= konvertera(totalInkomster)
     let totalSaldo=totalInkomster-totalUtgifter
+    let totalSaldoConvert=konvertera(totalSaldo)
     return(
-        <BankAppContext.Provider value={{inkomst,setInkomst,utgifter, setUtgifter, valuta, setValuta, konto, betala,lön,bytValuta,kategorier, konvertera, totalUtgifterConvert, kategoriLogos, sumUtgift, kategoriProcent, transaktioner,totalSaldo, totalInkomster}}>
+        <BankAppContext.Provider value={{inkomst, totalInkomsterConvert,totalSaldoConvert,setInkomst,utgifter, setUtgifter, valuta, setValuta, konto, betala,lön,bytValuta,kategorier, konvertera, totalUtgifterConvert, kategoriLogos, sumUtgift, kategoriProcent,rates, transaktioner,totalSaldo, totalInkomster}}>
             {children}
         </BankAppContext.Provider>
     )

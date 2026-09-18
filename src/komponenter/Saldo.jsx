@@ -7,7 +7,7 @@ export default function Saldo(){
         <div className="saldoDiv">
             <div className="saldoText">
                 <h2>Din Saldo</h2>
-                {<h3>Tillgänlig just nu på ditt konto: {totalSaldo} {valuta}</h3>}
+                {<h3>Tillgänlig just nu på ditt konto: {konvertera(totalSaldo)} {valuta}</h3>}
             </div>
             <div className="kontoText">
                 <div className="flex-row">
