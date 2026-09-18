@@ -104,8 +104,8 @@ export function BankAppProvider({children}){
     function betala(utgift){
         setUtgifter(prev=>[...prev,utgift])
     }
-    function lön(belopp){
-        setInkomst(prev=>prev+belopp)
+    function lön(inkomst){
+        setInkomst(prev=>[...prev,inkomst])
     }
     function bytValuta(nyValuta){
         setValuta(nyValuta)
