@@ -8,7 +8,7 @@ export default function Betala(){
     let [namn, setNamn] = useState('')
     let [datum, setDatum] = useState('')
     let [fel, setFel] = useState('')
-    let {betala, konto, totalSaldo, kategorier, utgifter}=useContext(BankAppContext)
+    let {betala, konto, totalSaldo, kategorier}=useContext(BankAppContext)
     function submit(e){
         e.preventDefault()
         setFel('')
@@ -37,16 +37,17 @@ export default function Betala(){
         }
         betala(nyUppgift)
         alert(`Du har betalat ${belopp} till ${namn}!`)
-        console.log(utgifter)
+        setPopup(false)
     }
     return(
         <div>
             <button onClick={()=>setPopup(true)} className="betalaBtn">🧾</button>
             <p>Betala räkningar</p>
             {popup&&(
-                <div className="stängPopup" onClick={()=>setPopup(false)}>X
+                <div className="stängPopup" onClick={()=>setPopup(false)}>
                     <div className="popup" onClick={(e)=>e.stopPropagation()}>
-                        <h3>Betala räkning</h3>
+                        <button className="x" onClick={()=>setPopup(false)}>x</button>
+                        <h3>Betala din räkning här</h3>
                         <form onSubmit={submit}>
                             <label>Välj konto:</label>
                             <select value={konto} disabled>
