@@ -199,7 +199,11 @@ footer{
         padding-top: 30px;
     }
 }
-
+.mainTrans h2{
+    font-size: 38px;
+    margin-top: 30px;
+    color: rgb(77, 76, 78);
+}
 
 .popup {
     background-color: rgba(245, 243, 243, 1);
