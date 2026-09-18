@@ -1,21 +1,17 @@
 import { useContext } from "react"
 import { BankAppContext } from "../context/BankAppContext"
-import {Link} from 'react-router-dom'
 import Transaktion from "./Transaktion"
 
-export default function TransaktionerDiv(){
+export default function AllaTransaktioner(){
     let{transaktioner}=useContext(BankAppContext)
-    let senaste=[...transaktioner].sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,4)
+    let senaste=[...transaktioner].sort((a,b)=>new Date(b.date)-new Date(a.date))
     return(
-        <Link className="link" to='/transaktioner'>
             <div className="transaktionerDiv">
-                <h2>Senaste Transaktioner</h2>
                 {senaste.map((trans,i)=>{
                     return(
                         <Transaktion trans={trans}i={i}/>
                     )
                 })}
             </div>
-        </Link>
         )
 }
