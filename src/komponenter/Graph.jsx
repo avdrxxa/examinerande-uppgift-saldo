@@ -11,7 +11,7 @@ let färger={
 }
 let månader=['Jan', 'Feb', 'Mars', 'Apr', 'Maj', 'Juni', 'Juli', 'Aug', 'Sep', 'Okt', 'Nov', 'Dec']
 
-function grupperaMånads(nuUtgifter){
+function grupperaMånads(nuUtgifter=[], konvertera){
     let grupper={}
     nuUtgifter.forEach((utgift)=>{
         let månadsIndex=new Date(utgift.date).getMonth()
@@ -19,13 +19,18 @@ function grupperaMånads(nuUtgifter){
         if(!grupper[månad]){
             grupper[månad]={månad, mat:0, transport:0, boende:0, nöje:0, övrigt:0}
         }
-        grupper[månad][utgift.kategori]+=utgift.belopp
+        let convert= konvertera? konvertera(utgift.belopp): utgift.belopp
+        if(grupper[månad][utgift.kategori]!==undefined){
+            grupper[månad][utgift.kategori]+=convert
+        }
     })
     return månader.filter(e=>grupper[e]).map(e=>grupper[e])
 }
 export default function Graph(){
-    let {nuUtgifter}=useContext(BankAppContext)
-    let data=useMemo(()=>grupperaMånads(nuUtgifter),[nuUtgifter])
+    let {nuUtgifter=[], konvertera, valuta, rates}=useContext(BankAppContext)
+    let data=useMemo(()=>{
+        return grupperaMånads(nuUtgifter, konvertera)
+    },[nuUtgifter, konvertera, valuta, rates])
     return(
         <div className="graph">
             <ResponsiveContainer>
