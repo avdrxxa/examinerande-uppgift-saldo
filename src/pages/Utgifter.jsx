@@ -8,7 +8,7 @@ export default function Utgifter(){
             <Header isHome={false}/>
             <main>
                 <Link to='/'>Back Home</Link>
-                <h2>Utgifter per kategori</h2>
+                <h2 className="h2graph">Utgifter per kategori</h2>
                 <Graph/>
             </main>
         </>

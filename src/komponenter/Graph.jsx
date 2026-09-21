@@ -3,13 +3,13 @@ import { BankAppContext } from "../context/BankAppContext"
 import { BarChart, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis, Bar } from "recharts"
 
 let färger={
-    mat:'#f97768',
-    transport: '#4dabea',
-    boende: '#eead44',
-    nöje: '#58f499',
-    övrigt: '#e067f8'
+    mat:'#b4df58',
+    transport: '#ea4dc8',
+    boende: '#91daee',
+    nöje: '#4be48a',
+    övrigt: '#b767f8'
 }
-let månader=['Januari', 'Februari', 'Mars', 'April', 'Maj', 'Juni', 'Juli', 'Augusti', 'Septemeber', 'Oktober', 'November', 'December']
+let månader=['Jan', 'Feb', 'Mars', 'Apr', 'Maj', 'Juni', 'Juli', 'Aug', 'Sep', 'Okt', 'Nov', 'Dec']
 
 function grupperaMånads(utgifter){
     let grupper={}
@@ -26,6 +26,7 @@ function grupperaMånads(utgifter){
 export default function Graph(){
     let {utgifter}=useContext(BankAppContext)
     let data=useMemo(()=>grupperaMånads(utgifter),[utgifter])
+    console.log(utgifter)
     return(
         <div className="graph">
             <ResponsiveContainer>
@@ -34,11 +35,11 @@ export default function Graph(){
                     <YAxis/>
                     <Tooltip/>
                     <Legend/>
-                    <Bar dataKey='mat' fill={färger.mat}/>
-                    <Bar dataKey='transport' fill={färger.transport}/>
-                    <Bar dataKey='boende' fill={färger.boende}/>
-                    <Bar dataKey='nöje' fill={färger.nöje}/>
-                    <Bar dataKey='övrigt' fill={färger.övrigt}/>
+                    <Bar dataKey='mat' fill={färger.mat} radius={[6, 6, 0, 0]}/>
+                    <Bar dataKey='transport' fill={färger.transport} radius={[6, 6, 0, 0]}/>
+                    <Bar dataKey='boende' fill={färger.boende} radius={[6, 6, 0, 0]}/>
+                    <Bar dataKey='nöje' fill={färger.nöje} radius={[6, 6, 0, 0]}/>
+                    <Bar dataKey='övrigt' fill={färger.övrigt} radius={[6, 6, 0, 0]}/>
                 </BarChart>
             </ResponsiveContainer>
         </div>
