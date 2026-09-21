@@ -7,14 +7,14 @@ export default function Saldo(){
         <div className="saldoDiv">
             <div className="saldoText">
                 <h2>Din Saldo</h2>
-                {<h3>Tillgänlig just nu på ditt konto: {konvertera(totalSaldo)} {valuta}</h3>}
+                {<h3>Tillgänlig just nu på ditt konto: {konvertera(totalSaldo).toLocaleString('sv-SV')} {valuta}</h3>}
             </div>
             <div className="kontoText">
                 <div className="flex-row">
                     <p>mitt-personliga-kontot</p>
                     <p>{konto}</p>
                 </div>
-                    <h2>{konvertera(totalSaldo)} {valuta}</h2>
+                    <h2>{konvertera(totalSaldo).toLocaleString('sv-SE')} {valuta}</h2>
             </div>
         </div>
         )

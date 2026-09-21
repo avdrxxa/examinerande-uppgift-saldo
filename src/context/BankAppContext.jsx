@@ -608,6 +608,9 @@ export function BankAppProvider({children}){
         setValuta(nyValuta)
     }
     function konvertera(SEK){
+        if(!SEK || isNaN(SEK)){
+            return 0
+        }
         if(valuta==='SEK'){
             return SEK
         }

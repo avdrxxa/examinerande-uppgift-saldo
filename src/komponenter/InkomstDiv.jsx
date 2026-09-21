@@ -7,7 +7,7 @@ export default function InkomsterDiv(){
         <div className="inkomstDiv">
             <h3>Inkomster</h3>
             <div className="flex-end">
-                <h3>+ {totalInkomsterConvert} {valuta}</h3>
+                <h3>+ {Number(totalInkomsterConvert).toLocaleString('sv-SE',{maximumFractionDigits: 2})} {valuta}</h3>
             </div>
         </div>
         )

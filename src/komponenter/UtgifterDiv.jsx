@@ -7,7 +7,7 @@ export default function UtgifterDiv(){
         <div className="utgifterDiv">
             <h3>Utgifter</h3>
             <div className="flex-end">
-                <h3>- {totalUtgifterConvert} {valuta}</h3>
+                <h3>- {totalUtgifterConvert.toLocaleString('sv-SE')} {valuta}</h3>
             </div>
         </div>
         )
