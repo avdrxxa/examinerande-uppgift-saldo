@@ -38,7 +38,7 @@ export default function Graph(){
                     <XAxis dataKey='månad'/>
                     <YAxis/>
                     <Tooltip/>
-                    <Legend/>
+                    <Legend iconType="circle"/>
                     <Bar dataKey='mat' fill={färger.mat} radius={[6, 6, 0, 0]}/>
                     <Bar dataKey='transport' fill={färger.transport} radius={[6, 6, 0, 0]}/>
                     <Bar dataKey='boende' fill={färger.boende} radius={[6, 6, 0, 0]}/>

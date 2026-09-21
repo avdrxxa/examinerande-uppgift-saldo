@@ -40,6 +40,9 @@ nav{
         color: rgb(78, 24, 106);
         gap: 15px;
     }
+    div.popup{
+        flex-direction: column;
+    }
 }
 main{
     justify-self: center;
@@ -287,5 +290,85 @@ footer{
 }
 .recharts-legend-item svg{
     border-radius: 50%;
+}
+
+@media screen and (max-width: 1050px){
+    main{
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    .recharts-legend-item{
+        margin-right: 30px !important;
+    }
+    main.mainTrans{
+        h2{
+            padding-left: 20px;
+        }
+    }
+    .mainUt{
+        h2{
+            padding-left: 60px;
+            padding-top: 130px;
+        }
+    .graph{
+        padding: 30px 0;
+    }
+    }
+    nav{
+        margin-bottom: 40px;
+    }
+    .a{
+        padding-left: 20px;
+    }
+    .inkomstutgifter{
+        flex-direction: column;
+        .inkomstDiv, .utgifterDiv{
+            width: 100%;
+        }
+    }
+    h1{
+        padding: 50px 10px 40px 20px ;
+    }
+    footer{
+        bottom: 0;
+        padding: 30px;
+        margin: 0;
+        padding-bottom: 50px;
+        img{
+            height: 80px;
+        }
+        .textLogo{
+            padding-top: 23px;
+            height: 70px;
+        }
+    }
+    nav{
+
+        padding: 0;
+        padding-bottom: 20px;
+        .row{
+            justify-content: center;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            img{
+                height: 85px;
+                
+            }
+            .textLogo{
+                margin-top: 20px;
+            }
+        }
+    }
+    .actions{
+        align-items: center;
+        justify-content: center;
+        gap: 50px;
+        div{
+            flex-direction: column;
+        }
+    }
 }
 

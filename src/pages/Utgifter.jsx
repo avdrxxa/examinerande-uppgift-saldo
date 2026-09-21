@@ -6,8 +6,8 @@ export default function Utgifter(){
     return(
         <>
             <Header isHome={false}/>
-            <main>
-                <Link to='/'>Back Home</Link>
+            <main className="mainUt">
+                <Link className="a" to='/'>Back Home</Link>
                 <h2 className="h2graph">Utgifter per kategori</h2>
                 <Graph/>
             </main>

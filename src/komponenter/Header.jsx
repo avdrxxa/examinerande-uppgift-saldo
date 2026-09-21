@@ -9,9 +9,9 @@ export default function Header({isHome}){
         <nav>
         <div className='row'>
             <img src={logo}></img>
-            <img src={logoText}></img>
+            <img className='textLogo' src={logoText}></img>
         </div>
-            {isHome && <div className='actions'> <Betala/> <Inkomst/> <BytValuta/> </div>}
+            {isHome && <div className='actions'> <Betala/> <BytValuta/> <Inkomst/> </div>}
         </nav>
         )
 }

@@ -4,7 +4,7 @@ export default function Footer(){
     return(
         <footer>
             <img src={logo}></img>
-            <img src={logoText}></img>
+            <img className='textLogo' src={logoText}></img>
             <p>@All rights reserved. Project done by Andreea-Raluca Damian.</p>
         </footer>
         )
