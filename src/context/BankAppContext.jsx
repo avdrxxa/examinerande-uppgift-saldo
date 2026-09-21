@@ -132,13 +132,6 @@ export function BankAppProvider({children}){
             konto:'777102-8091'
         },
         {
-            kategori:'mat',
-            belopp:1390,
-            date:'2026-09-21',
-            name:'Willys',
-            konto:'777102-8091'
-        },
-        {
             kategori:'övrigt',
             belopp:1989,
             date:'2026-03-20',
@@ -454,13 +447,6 @@ export function BankAppProvider({children}){
             konto:'777102-8091'
         },
         {
-            kategori:'mat',
-            belopp:1390,
-            date:'2026-09-21',
-            name:'Willys',
-            konto:'777102-8091'
-        },
-        {
             kategori:'transport',
             belopp:610,
             date:'2026-09-08',
@@ -620,11 +606,22 @@ export function BankAppProvider({children}){
         }
         return Math.round(SEK*rate*100)/100
     }
-    let totalUtgifter=utgifter.reduce((total,utgift)=>utgift.belopp+total,0)
+    function harGått(datum){
+        if(!datum){
+            return false
+        }
+        let idag= new Date()
+        idag.setHours(23,59,59,999)
+        let transDatum=new Date(datum)
+        return transDatum<=idag
+    }
+    let nuInkomster=inkomst.filter(a=>harGått(a.date))
+    let nuUtgifter=utgifter.filter(a=>harGått(a.date))
+    let totalUtgifter=nuUtgifter.reduce((total,utgift)=>utgift.belopp+total,0)
     let totalUtgifterConvert= konvertera(totalUtgifter)
-    function gruppEfterKategori(utgifter){
+    function gruppEfterKategori(nuUtgifter){
         let grupper={}
-        utgifter.forEach(utgift=>{
+        nuUtgifter.forEach(utgift=>{
             if(!grupper[utgift.kategori]){
                 grupper[utgift.kategori]=0
             }
@@ -632,7 +629,7 @@ export function BankAppProvider({children}){
         })
         return grupper
     }
-    let kategoriTotal= gruppEfterKategori(utgifter)
+    let kategoriTotal= gruppEfterKategori(nuUtgifter)
     let sumUtgift=Object.values(kategoriTotal).reduce((sum,val)=>sum+val,0)
     let kategoriProcent=Object.entries(kategoriTotal).map(([kategori, belopp])=>({
         kategori,
@@ -640,10 +637,10 @@ export function BankAppProvider({children}){
         procent:(belopp/sumUtgift)*100
     }))
     let transaktioner=[
-        ...utgifter.map(u=>({...u,typ:'utgift'})),
-        ...inkomst.map(i=>({...i, typ:'inkomst'}))
+        ...nuUtgifter.map(u=>({...u,typ:'utgift'})),
+        ...nuInkomster.map(i=>({...i, typ:'inkomst'}))
     ]
-    let totalInkomster=inkomst.reduce((sum,i)=>sum+i.belopp,0)
+    let totalInkomster=nuInkomster.reduce((sum,i)=>sum+i.belopp,0)
     let totalInkomsterConvert= konvertera(totalInkomster)
     let totalSaldo=totalInkomster-totalUtgifter
     let totalSaldoConvert=konvertera(totalSaldo)
@@ -651,7 +648,7 @@ export function BankAppProvider({children}){
     useEffect(() => {localStorage.setItem('utgifter', JSON.stringify(utgifter))}, [utgifter])
     useEffect(() => {localStorage.setItem('valuta', JSON.stringify(valuta))}, [valuta])
     return(
-        <BankAppContext.Provider value={{inkomst, totalInkomsterConvert,totalSaldoConvert,setInkomst,utgifter, setUtgifter, valuta, setValuta, konto, betala,lön,bytValuta,kategorier, konvertera, totalUtgifterConvert, kategoriLogos, sumUtgift, kategoriProcent,rates, transaktioner,totalSaldo, totalInkomster}}>
+        <BankAppContext.Provider value={{inkomst,nuUtgifter, totalInkomsterConvert,totalSaldoConvert,setInkomst,utgifter, setUtgifter, valuta, setValuta, konto, betala,lön,bytValuta,kategorier, konvertera, totalUtgifterConvert, kategoriLogos, sumUtgift, kategoriProcent,rates, transaktioner,totalSaldo, totalInkomster}}>
             {children}
         </BankAppContext.Provider>
     )
