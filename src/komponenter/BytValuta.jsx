@@ -33,7 +33,7 @@ export default function BytValuta(){
                         <form onSubmit={submit}>
                             <label>Välj valuta:</label>
                             <select value={vald} onChange={(e)=>setVald(e.target.value)}>
-                                <option value={valuta}>{valuta}</option>
+                                <option value='SEK'>SEK</option>
                                 {Object.keys(rates).map(rate=>(
                                     <option key={rate} value={rate}>{rate}</option>
                                 ))}
