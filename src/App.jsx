@@ -4,6 +4,7 @@ import Transaktioner from './pages/Transaktioner'
 import Homepage from './pages/Homepage'
 import Utgifter from './pages/Utgifter'
 import Footer from './komponenter/Footer'
+import NotFound from './pages/NotFound'
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <Route path='/' element={<Homepage/>}/>
       <Route path='/transaktioner' element={<Transaktioner/>}/>
       <Route path='/utgifter' element={<Utgifter/>}/>
+      <Route path='*' element= {<NotFound/> }/>
     </Routes>
     <Footer/>
     </>
