@@ -17,6 +17,9 @@ export default function BytValuta(){
             setFel('Du kan inte ändra till samma valuta')
             return
         }
+        if(!valuta){
+            alert('Inga valutor kunde hittas, denna tjänst är tillgänlig nere.')
+        }
         bytValuta(vald)
         alert(`Du har bytt valuta till ${vald}!`)
         setPopup(false)
