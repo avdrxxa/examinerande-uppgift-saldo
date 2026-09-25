@@ -7,9 +7,8 @@ import övrigtlogo from '../assets/övrigtlogo.svg'
 import nöjelogo from '../assets/nöjelogo.svg'
 export const BankAppContext=createContext(null)
 export function BankAppProvider({children}){
-    //skriv values här så som functioner, arrays, objecter och 
-    //new Date().toJSON().splice(0,10)
     let [rates,setRates]=useState({})
+
     let kategorier=['boende', 'mat', 'transport', 'nöje', 'övrigt']
     let kategoriLogos={
         boende:boendelogo,
@@ -19,6 +18,7 @@ export function BankAppProvider({children}){
         övrigt:övrigtlogo,
         lön:lönlogo
     }
+
     let [inkomst,setInkomst]=useState(()=>{
         let sparat= localStorage.getItem('inkomst')
         return sparat? JSON.parse(sparat):[
@@ -58,6 +58,7 @@ export function BankAppProvider({children}){
             konto:'777102-8091'
         },
     ]})
+
     useEffect(()=>{
         let getValutor=async()=>{
             try{
@@ -71,7 +72,9 @@ export function BankAppProvider({children}){
         }
         getValutor()
     },[])
+
     let konto= '777102-8091'
+
     let[utgifter,setUtgifter]=useState(()=>{
         let sparat=localStorage.getItem('utgifter')
         return sparat? JSON.parse(sparat):[
@@ -580,19 +583,24 @@ export function BankAppProvider({children}){
             konto:'777102-8091'
         },
     ]})
+
     let [valuta,setValuta]=useState(()=>{
         let sparat=localStorage.getItem('valuta')
         return sparat?JSON.parse(sparat):'SEK'
     })
+
     function betala(utgift){
         setUtgifter(prev=>[...prev,utgift])
     }
+
     function lön(inkomst){
         setInkomst(prev=>[...prev,inkomst])
     }
+
     function bytValuta(nyValuta){
         setValuta(nyValuta)
     }
+
     function konvertera(SEK){
         if(!SEK || isNaN(SEK)|| SEK===null|| SEK ===undefined){
             return 0
@@ -606,6 +614,7 @@ export function BankAppProvider({children}){
         }
         return Math.round(SEK*rate*100)/100
     }
+
     function harGått(datum){
         if(!datum){
             return false
@@ -615,10 +624,10 @@ export function BankAppProvider({children}){
         let transDatum=new Date(datum)
         return transDatum<=idag
     }
+
     let nuInkomster=inkomst.filter(a=>harGått(a.date))
     let nuUtgifter=utgifter.filter(a=>harGått(a.date))
-    let totalUtgifter=nuUtgifter.reduce((total,utgift)=>utgift.belopp+total,0)
-    let totalUtgifterConvert= konvertera(totalUtgifter)
+
     function gruppEfterKategori(nuUtgifter){
         let grupper={}
         nuUtgifter.forEach(utgift=>{
@@ -629,6 +638,12 @@ export function BankAppProvider({children}){
         })
         return grupper
     }
+    let transaktioner=[
+        ...nuUtgifter.map(u=>({...u,typ:'utgift'})),
+        ...nuInkomster.map(i=>({...i, typ:'inkomst'}))
+    ]
+
+
     let kategoriTotal= gruppEfterKategori(nuUtgifter)
     let sumUtgift=Object.values(kategoriTotal).reduce((sum,val)=>sum+val,0)
     let kategoriProcent=Object.entries(kategoriTotal).map(([kategori, belopp])=>({
@@ -636,17 +651,18 @@ export function BankAppProvider({children}){
         belopp,
         procent:(belopp/sumUtgift)*100
     }))
-    let transaktioner=[
-        ...nuUtgifter.map(u=>({...u,typ:'utgift'})),
-        ...nuInkomster.map(i=>({...i, typ:'inkomst'}))
-    ]
+    
+    let totalUtgifter=nuUtgifter.reduce((total,utgift)=>utgift.belopp+total,0)
+    let totalUtgifterConvert= konvertera(totalUtgifter)
     let totalInkomster=nuInkomster.reduce((sum,i)=>sum+i.belopp,0)
     let totalInkomsterConvert= konvertera(totalInkomster)
     let totalSaldo=totalInkomster-totalUtgifter
     let totalSaldoConvert=konvertera(totalSaldo)
+
     useEffect(() => {localStorage.setItem('inkomst', JSON.stringify(inkomst))}, [inkomst])
     useEffect(() => {localStorage.setItem('utgifter', JSON.stringify(utgifter))}, [utgifter])
     useEffect(() => {localStorage.setItem('valuta', JSON.stringify(valuta))}, [valuta])
+    
     return(
         <BankAppContext.Provider value={{inkomst,nuUtgifter, totalInkomsterConvert,totalSaldoConvert,setInkomst,utgifter, setUtgifter, valuta, setValuta, konto, betala,lön,bytValuta,kategorier, konvertera, totalUtgifterConvert, kategoriLogos, sumUtgift, kategoriProcent,rates, transaktioner,totalSaldo, totalInkomster}}>
             {children}
