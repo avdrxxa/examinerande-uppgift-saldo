@@ -6,7 +6,7 @@ export default function Inkomst(){
         let [belopp, setBelopp] = useState('')
         let [datum, setDatum] = useState('')
         let [fel, setFel] = useState('')
-        let {lön, konto}=useContext(BankAppContext)
+        let {lön, konto, konverteraSEK}=useContext(BankAppContext)
         function submit(e){
             e.preventDefault()
             setFel('')
@@ -16,7 +16,7 @@ export default function Inkomst(){
             }
             let nyInkomst={
                 kategori:'lön',
-                belopp:Number(belopp),
+                belopp:konverteraSEK(belopp),
                 date:datum,
                 name:'Lön',
                 konto
