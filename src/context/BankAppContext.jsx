@@ -615,6 +615,21 @@ export function BankAppProvider({children}){
         return Math.round(SEK*rate*100)/100
     }
 
+    function konverteraSEK(belopp){
+    if(!belopp || isNaN(belopp)){
+        return 0
+    }
+    if(valuta === 'SEK'){
+        return Number(belopp)
+    }
+    let rate = rates[valuta]
+    if(!rate){
+        return Number(belopp)
+    }
+    return Number(belopp)/rate
+    }
+
+
     function harGått(datum){
         if(!datum){
             return false
@@ -664,7 +679,7 @@ export function BankAppProvider({children}){
     useEffect(() => {localStorage.setItem('valuta', JSON.stringify(valuta))}, [valuta])
     
     return(
-        <BankAppContext.Provider value={{inkomst,nuUtgifter, totalInkomsterConvert,totalSaldoConvert,setInkomst,utgifter, setUtgifter, valuta, setValuta, konto, betala,lön,bytValuta,kategorier, konvertera, totalUtgifterConvert, kategoriLogos, sumUtgift, kategoriProcent,rates, transaktioner,totalSaldo, totalInkomster}}>
+        <BankAppContext.Provider value={{inkomst,nuUtgifter, totalInkomsterConvert,totalSaldoConvert,setInkomst,utgifter, setUtgifter, valuta, setValuta, konto, konverteraSEK, betala,lön,bytValuta,kategorier, konvertera, totalUtgifterConvert, kategoriLogos, sumUtgift, kategoriProcent,rates, transaktioner,totalSaldo, totalInkomster}}>
             {children}
         </BankAppContext.Provider>
     )

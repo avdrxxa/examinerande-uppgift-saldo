@@ -8,7 +8,7 @@ export default function Betala(){
     let [namn, setNamn] = useState('')
     let [datum, setDatum] = useState('')
     let [fel, setFel] = useState('')
-    let {betala, konto, totalSaldo, kategorier}=useContext(BankAppContext)
+    let {betala, konto, totalSaldo, kategorier,konverteraSEK, totalSaldoConvert}=useContext(BankAppContext)
     function submit(e){
         e.preventDefault()
         setFel('')
@@ -30,7 +30,7 @@ export default function Betala(){
         }
         let nyUppgift={
             kategori,
-            belopp:Number(belopp),
+            belopp:konverteraSEK(belopp),
             date:datum,
             name:namn,
             konto
@@ -54,7 +54,7 @@ export default function Betala(){
                                 <option value={konto}>{konto}</option>
                             </select>
                             <label>Belopp:</label>
-                            <input type="number" min='0' max={totalSaldo||0} value={belopp} placeholder={`Max ${totalSaldo}`} onChange={(e)=>setBelopp(e.target.value)} required></input>
+                            <input type="number" min='0' max={totalSaldo||0} value={belopp} placeholder={`Max ${totalSaldoConvert}`} onChange={(e)=>setBelopp(e.target.value)} required></input>
                             <label>Kategori:</label>
                             <select value={kategori} onChange={(e)=>setKategori(e.target.value)}>
                                 {kategorier.map(kategori=>(
