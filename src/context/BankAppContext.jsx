@@ -66,7 +66,7 @@ export function BankAppProvider({children}){
                     let data= await res.json()
                 setRates(data.rates)
             }catch(err){
-                console.error(err)
+                alert(err)
             }
         }
         getValutor()
