@@ -1,5 +1,5 @@
 import Header from "../komponenter/Header";
-import InkomsterDiv from "../komponenter/inkomstDiv";
+import InkomsterDiv from "../komponenter/InkomstDiv";
 import Saldo from "../komponenter/Saldo";
 import TransaktionerDiv from "../komponenter/TransaktionerDiv";
 import UtgifterDiv from "../komponenter/UtgifterDiv";
